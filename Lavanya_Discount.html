@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lavanya | Personalized Discount</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffe6f0, #fbd3e9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #C13584;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #C13584;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #result {
+      font-size: 1.1rem;
+      color: #333;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Discover Your Lavanya Discount</h1>
+  <form id="discountForm">
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <input type="tel" id="phone" placeholder="Your Phone Number" required />
+    <input type="date" id="birthday" required />
+    <button type="submit">Get My Discount</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function reduceToSingleDigit(num) {
+      while (num > 9) {
+        num = num.toString().split('').reduce((a, b) => +a + +b, 0);
+      }
+      return num;
+    }
+
+    document.getElementById('discountForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const birthday = new Date(document.getElementById('birthday').value);
+
+      const day = birthday.getDate();
+      const birthNumber = reduceToSingleDigit(day);
+
+      const today = new Date();
+      let message = `Hi ${name}, your birth number is <strong>${birthNumber}</strong>.`;
+      message += ` You qualify for a <strong>${birthNumber}%</strong> discount.`;
+
+      if (today.getDay() === 5) {
+        const fridayDigit = reduceToSingleDigit(today.getDate());
+        message += ` Since today is Friday, you also get an additional <strong>${fridayDigit}%</strong> Friday discount!`;
+      }
+
+      document.getElementById('result').innerHTML = message;
+    });
+  </script>
+</body>
+</html>
